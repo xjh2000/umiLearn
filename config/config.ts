@@ -1,11 +1,10 @@
 import {defineConfig} from 'umi';
 import defaultSettings from './defaultSettings';
 import chainWebpack from './webpack'
+import {routes} from "./routs";
 
 ///<reference path="https://umijs.org/zh-CN/config"/>
 export default defineConfig({
-
-
     antd: {
         mobile: true,
     },
@@ -13,7 +12,7 @@ export default defineConfig({
         siderWidth: 208,
         ...defaultSettings,
     },
-
+    routes:routes,
     hash: true,
     nodeModulesTransform: {
         type: 'none',

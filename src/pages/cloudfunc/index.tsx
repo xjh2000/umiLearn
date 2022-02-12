@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {getApp} from "@/tcb";
-import styles from "@/pages/index.less";
+import styles from "@/pages/cloudfunc/index.less";
+import {PageContainer} from "@ant-design/pro-layout";
 
 export default function Hello() {
     const app = getApp();
@@ -21,30 +22,32 @@ export default function Hello() {
     };
 
     return (
-        <div className="hello">
-            <h1 className={styles.title}>this is cloudfunc</h1>
-            <div>
+        <PageContainer>
+            <div className="hello">
+                <h1 className={styles.title}>this is cloudfunc</h1>
                 <div>
-                    <h2>调用云函数</h2>
-                    <p>
-                        点击
-                        <a
-                            href="/#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                callFunction();
-                            }}
-                        >
-                            调用 hello world 云函数
-                        </a>
-                    </p>
-                    <p>
-                        <b>云函数执行结果</b>
-                    </p>
-                    <p>{callFunctionResult}</p>
-                </div>
+                    <div>
+                        <h2>调用云函数</h2>
+                        <p>
+                            点击
+                            <a
+                                href="/#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    callFunction();
+                                }}
+                            >
+                                调用 hello world 云函数
+                            </a>
+                        </p>
+                        <p>
+                            <b>云函数执行结果</b>
+                        </p>
+                        <p>{callFunctionResult}</p>
+                    </div>
 
+                </div>
             </div>
-        </div>
+        </PageContainer>
     );
 }
