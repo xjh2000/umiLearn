@@ -9,8 +9,8 @@
       "client": {
         "use": "@cloudbase/framework-plugin-website",
         "inputs": {
-          "installCommand": "cnpm install --prefer-offline --no-audit --progress=false",
-          "buildCommand": "cnpm run build",
+          "installCommand": "tyarn install --prefer-offline --no-audit --progress=false",
+          "buildCommand": "tyarn run build",
           "outputPath": "build",
           "cloudPath": "/umi-learn",
           "envVariables": {
