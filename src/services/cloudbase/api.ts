@@ -17,17 +17,22 @@ window._tcbEnv = window._tcbEnv || {
 export const envId = window._tcbEnv.TCB_ENV_ID;
 export const region = window._tcbEnv.TCB_REGION;
 
-const app = tcb.init({
+export const myApp = tcb.init({
   env: envId,
   region: region,
 });
 
-app.auth({
+export const myAuth = myApp.auth({
   persistence: "local",
 });
 
+/**
+ * 调用云函数
+ * @param name 函数名
+ * @param data 传入数据
+ */
 export async function tcbCallFunction(name: string, data: any) {
-  return app.callFunction({
+  return myApp.callFunction({
     name: name,
     data: data,
   });

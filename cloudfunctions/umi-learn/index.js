@@ -5,7 +5,6 @@ exports.main = async (event, context) => {
     env: cloud.SYMBOL_CURRENT_ENV,
   });
 
-  // todo
   // your code here
   return {
     event,
