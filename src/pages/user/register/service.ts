@@ -1,4 +1,4 @@
-import { request } from "umi";
+import { request } from "@/.umi/plugin-request/request";
 
 export interface StateType {
   status?: "ok" | "error";
@@ -9,9 +9,6 @@ export interface UserRegisterParams {
   mail: string;
   password: string;
   confirm: string;
-  mobile: string;
-  captcha: string;
-  prefix: string;
 }
 
 export async function fakeRegister(params: UserRegisterParams) {

@@ -18,13 +18,27 @@ export const routes: MenuDataItem[] = [
     layout: false,
     routes: [
       {
+        path: "/user/login",
+        component: "./user/login",
+      },
+      {
         path: "/user/register",
         component: "./user/register",
+      },
+      {
+        path: "/user/register-result",
+        component: "./user/register-result",
+      },
+      {
+        component: "./404",
       },
     ],
   },
   {
     path: "/",
     redirect: "/home",
+  },
+  {
+    component: "./404",
   },
 ];

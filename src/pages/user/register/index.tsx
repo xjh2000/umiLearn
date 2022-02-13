@@ -1,12 +1,24 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import type { FC } from "react";
 import { useState } from "react";
-import { Button, Form, Input, message, Popover, Progress } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Popover,
+  Progress,
+  Row,
+} from "antd";
 import type { Store } from "antd/es/form/interface";
-import { history, Link, useRequest } from "umi";
-import type { StateType } from "./service";
-import { fakeRegister } from "./service";
+import { history, Link } from "umi";
 
-import styles from "./style.less";
+import styles from "./index.less";
+import { tcbRegister } from "@/services/cloudbase/auth";
+import { useRequest } from "@@/plugin-request/request";
 
 const FormItem = Form.Item;
 const passwordStatusMap = {
@@ -54,25 +66,25 @@ const Register: FC = () => {
     return "poor";
   };
 
-  const { loading: submitting, run: register } = useRequest<{
-    data: StateType;
-  }>(fakeRegister, {
+  const { loading: submitting, run: register } = useRequest<any>(tcbRegister, {
     manual: true,
-    onSuccess: (data: any, params: any) => {
-      if (data.status === "ok") {
-        message.success("注册成功！");
-        history.push({
-          pathname: "/user/register-result",
-          state: {
-            account: params.email,
-          },
-        });
-      }
+    throwOnError: true,
+    onSuccess: (data: [any], params: any) => {
+      debugger;
+      message.success("注册成功！");
+      history.push({
+        pathname: "/user/register-result",
+        state: {
+          account: params.at(0).email,
+        },
+      });
     },
   });
 
   const onFinish = (values: Store) => {
-    register(values);
+    register(values).catch((e) => {
+      message.error(e.message);
+    });
   };
 
   const checkConfirm = (_: any, value: string) => {
@@ -121,96 +133,115 @@ const Register: FC = () => {
   };
 
   return (
-    <div className={styles.main}>
-      <h3>注册</h3>
-      <Form form={form} name="UserRegister" onFinish={onFinish}>
-        <FormItem
-          name="mail"
-          rules={[
-            {
-              required: true,
-              message: "请输入邮箱地址!",
-            },
-            {
-              type: "email",
-              message: "邮箱地址格式错误!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="邮箱" />
-        </FormItem>
-        <Popover
-          getPopupContainer={(node) => {
-            if (node && node.parentNode) {
-              return node.parentNode as HTMLElement;
-            }
-            return node;
-          }}
-          content={
-            visible && (
-              <div style={{ padding: "4px 0" }}>
-                {passwordStatusMap[getPasswordStatus()]}
-                {renderPasswordProgress()}
-                <div style={{ marginTop: 10 }}>
-                  <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
-                </div>
-              </div>
-            )
-          }
-          overlayStyle={{ width: 240 }}
-          placement="right"
-          visible={visible}
-        >
-          <FormItem
-            name="password"
-            className={
-              form.getFieldValue("password") &&
-              form.getFieldValue("password").length > 0 &&
-              styles.password
-            }
-            rules={[
-              {
-                validator: checkPassword,
-              },
-            ]}
-          >
-            <Input
-              size="large"
-              type="password"
-              placeholder="至少6位密码，区分大小写"
-            />
-          </FormItem>
-        </Popover>
-        <FormItem
-          name="confirm"
-          rules={[
-            {
-              required: true,
-              message: "确认密码",
-            },
-            {
-              validator: checkConfirm,
-            },
-          ]}
-        >
-          <Input size="large" type="password" placeholder="确认密码" />
-        </FormItem>
-        <FormItem>
-          <Button
-            size="large"
-            loading={submitting}
-            className={styles.submit}
-            type="primary"
-            htmlType="submit"
-          >
-            <span>注册</span>
-          </Button>
-          <Link className={styles.login} to="/user/login">
-            <span>使用已有账户登录</span>
-          </Link>
-        </FormItem>
-      </Form>
-    </div>
+    <>
+      <Row>
+        <Col span={8}>
+          <></>
+        </Col>
+        <Col span={8}>
+          <Card title={"注册"} size={"small"}>
+            <Form form={form} name="UserRegister" onFinish={onFinish}>
+              <FormItem
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "请输入邮箱地址!",
+                  },
+                  {
+                    type: "email",
+                    message: "邮箱地址格式错误!",
+                  },
+                ]}
+              >
+                <Input size="large" placeholder="邮箱" />
+              </FormItem>
+              <Popover
+                getPopupContainer={(node) => {
+                  if (node && node.parentNode) {
+                    return node.parentNode as HTMLElement;
+                  }
+                  return node;
+                }}
+                content={
+                  visible && (
+                    <div style={{ padding: "4px 0" }}>
+                      {passwordStatusMap[getPasswordStatus()]}
+                      {renderPasswordProgress()}
+                      <div style={{ marginTop: 10 }}>
+                        <span>
+                          请至少输入 6 个字符。请不要使用容易被猜到的密码。
+                        </span>
+                      </div>
+                    </div>
+                  )
+                }
+                overlayStyle={{ width: 240 }}
+                placement="right"
+                visible={visible}
+              >
+                <FormItem
+                  name="password"
+                  className={
+                    form.getFieldValue("password") &&
+                    form.getFieldValue("password").length > 0 &&
+                    styles.password
+                  }
+                  rules={[
+                    {
+                      validator: checkPassword,
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    type="password"
+                    placeholder="至少6位密码，区分大小写"
+                  />
+                </FormItem>
+              </Popover>
+              <FormItem
+                name="confirm"
+                rules={[
+                  {
+                    required: true,
+                    message: "确认密码",
+                  },
+                  {
+                    validator: checkConfirm,
+                  },
+                ]}
+              >
+                <Input size="large" type="password" placeholder="确认密码" />
+              </FormItem>
+              <FormItem>
+                <Row>
+                  <Col flex={4}>
+                    <Button
+                      size="large"
+                      loading={submitting}
+                      className={styles.submit}
+                      type="primary"
+                      htmlType="submit"
+                    >
+                      <span>注册</span>
+                    </Button>
+                  </Col>
+                  <Col flex={1}>
+                    <Link className={styles.login} to="/user/login">
+                      <span>使用已有账户登录</span>
+                    </Link>
+                  </Col>
+                </Row>
+              </FormItem>
+            </Form>
+          </Card>
+        </Col>
+        <Col span={8}>
+          <></>
+        </Col>
+      </Row>
+    </>
   );
 };
 export default Register;

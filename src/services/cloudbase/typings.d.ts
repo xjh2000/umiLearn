@@ -5,22 +5,21 @@ declare namespace API {
   type CurrentUser = {
     name?: string;
     avatar?: string;
-    userid?: string;
+    nickName?: string;
+    gender?: string;
+    avatarUrl?: string;
+    location?: { country?: string; province?: string; city?: string };
+    username?: string;
+    uid?: string;
     email?: string;
-    signature?: string;
-    title?: string;
-    group?: string;
-    tags?: { key?: string; label?: string }[];
-    notifyCount?: number;
-    unreadCount?: number;
-    country?: string;
-    access?: string;
-    geographic?: {
-      province?: { label?: string; key?: string };
-      city?: { label?: string; key?: string };
-    };
-    address?: string;
-    phone?: string;
+    loginType?: string;
+    openid?: string;
+    unionId?: string;
+    wxOpenId?: string;
+    wxPublicId?: string;
+    customUserId?: string;
+    qqMiniOpenId?: string;
+    hasPassword?: boolean;
   };
 
   type LoginResult = {
@@ -63,9 +62,20 @@ declare namespace API {
 
   type LoginParams = {
     username?: string;
+    email?: string;
     password?: string;
     autoLogin?: boolean;
     type?: string;
+  };
+
+  type UserRegisterParams = {
+    email: string;
+    password: string;
+    confirm: string;
+  };
+
+  type RegisterResult = {
+    requestId: string;
   };
 
   type ErrorResponse = {
