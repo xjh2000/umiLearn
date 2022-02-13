@@ -27,7 +27,6 @@ import {
 const Login: React.FC = () => {
   // const type = "account";
   const { setInitialState } = useModel("@@initialState") as any;
-
   const fetchUserInfo = async () => {
     const userInfo = await tcbCurrentUserInfo();
     if (JSON.stringify(userInfo) !== "{}") {
