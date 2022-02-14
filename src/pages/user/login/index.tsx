@@ -29,7 +29,7 @@ const Login: React.FC = () => {
   const { setInitialState } = useModel("@@initialState") as any;
   const fetchUserInfo = async () => {
     const userInfo = await tcbCurrentUserInfo();
-    if (JSON.stringify(userInfo) !== "{}") {
+    if (userInfo.uid) {
       await setInitialState((s: any) => ({
         ...s,
         currentUser: userInfo,
@@ -44,7 +44,11 @@ const Login: React.FC = () => {
       if (status) {
         message.success("登录成功！");
         await fetchUserInfo();
-        history.push("/home");
+        /** 此方法会跳转到 redirect 参数所在的位置 */
+        if (!history) return;
+        const { query } = history.location;
+        const { redirect } = query as { redirect: string };
+        history.push(redirect || "/");
         return;
       }
     } catch (error: any) {

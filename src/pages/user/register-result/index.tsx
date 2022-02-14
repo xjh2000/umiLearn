@@ -38,8 +38,8 @@ const actions = (email: string) => {
           <span>查看邮箱</span>
         </Button>
       </a>
-      <Link to="/">
-        <Button size="large">返回首页</Button>
+      <Link to={"/user/login"}>
+        <Button size="large">登录</Button>
       </Link>
     </div>
   );

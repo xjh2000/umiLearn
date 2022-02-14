@@ -26,22 +26,18 @@ export async function tcbRegister(params: API.UserRegisterParams) {
 }
 
 export async function tcbLoginWithEmail(params: API.LoginParams) {
-  try {
-    await myAuth.signInWithEmailAndPassword(
-      <string>params.email,
-      <string>params.password
-    );
-    return true;
-  } catch (e) {
-    throw e;
-  }
+  await myAuth.signInWithEmailAndPassword(
+    <string>params.email,
+    <string>params.password
+  );
+  return true;
 }
 
 export async function tcbCurrentUserInfo() {
   let user = await myAuth.getCurrenUser();
-  return _.pick(user, userInfo) as any;
+  return _.pick(user, userInfo) as API.CurrentUser;
 }
 
 export async function tcbSignOut() {
-  return await myAuth.signOut();
+  return myAuth.signOut();
 }

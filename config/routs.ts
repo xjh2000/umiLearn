@@ -8,6 +8,23 @@ export const routes: MenuDataItem[] = [
     component: "./home",
   },
   {
+    path: "/dashboard",
+    name: "可视化",
+    icon: "dashboard",
+    routes: [
+      {
+        path: "/dashboard",
+        redirect: "/dashboard/analysis",
+      },
+      {
+        name: "分析",
+        icon: "smile",
+        path: "/dashboard/analysis",
+        component: "./dashboard/analysis",
+      },
+    ],
+  },
+  {
     path: "/test",
     name: "测试",
     icon: "experiment",

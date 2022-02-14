@@ -74,18 +74,26 @@ const test: React.FC = () => {
       </Button>
       <Button
         onClick={() => {
-          console.log(initialState);
+          message.success(JSON.stringify(initialState));
         }}
       >
         initialState
       </Button>
       <Button
-        onClick={() => {
+        onClick={async () => {
           tcbSignOut();
-          setInitialState(_.omit(initialState, ["currentUser"]));
+          await setInitialState(_.omit(initialState, ["currentUser"]));
+          message.success(JSON.stringify(initialState));
         }}
       >
         signOut
+      </Button>
+      <Button
+        onClick={() => {
+          initialState.fetchUserInfo();
+        }}
+      >
+        fetchUserInfo
       </Button>
     </PageContainer>
   );

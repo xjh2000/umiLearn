@@ -11,7 +11,7 @@ export default defineConfig({
     // compact: true, // 开启紧凑主题
   },
   layout: {
-    siderWidth: 208,
+    siderWidth: 100,
     ...defaultSettings,
   },
   routes: routes,

@@ -70,7 +70,6 @@ const Register: FC = () => {
     manual: true,
     throwOnError: true,
     onSuccess: (data: [any], params: any) => {
-      debugger;
       message.success("注册成功！");
       history.push({
         pathname: "/user/register-result",

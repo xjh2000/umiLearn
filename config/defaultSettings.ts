@@ -12,6 +12,7 @@ const Settings: LayoutSettings & {
   title: "start time",
   pwa: false,
   splitMenus: true,
+  logo: "https://visual-time-5gdiwp6tb894caff-1259747411.tcloudbaseapp.com/logo.svg",
   iconfontUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js",
 };
 
