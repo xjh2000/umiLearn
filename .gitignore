@@ -1,4 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+### CloudBaseTCB template
+/cloudfunctions
+
 ### Umijs template
 # dependencies
 /node_modules
