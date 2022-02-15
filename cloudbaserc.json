@@ -35,17 +35,6 @@
             }
           ]
         }
-      },
-      "auth": {
-        "use": "@cloudbase/framework-plugin-auth",
-        "inputs": {
-          "configs": [
-            {
-              "platform": "NONLOGIN",
-              "status": "ENABLE"
-            }
-          ]
-        }
       }
     }
   },
