@@ -1,13 +1,14 @@
 export type DayData = {
-  date: string;
-  data: DayItem[];
+  date?: string;
+  data?: DayItem[];
 };
 
 export type DayItem = {
   order: number;
-  start_time: string;
-  end_time: string;
-  continue_time: string;
+  time_start: string;
+  time_end: string;
+  time_continue: string;
+  ratio: string;
   matter: string;
   type: string;
   status: string;

@@ -38,6 +38,44 @@ export async function tcbCallFunction(name: string, data: any) {
   });
 }
 
+/**
+ * 上传文件
+ * @param cloudPath 云端路径
+ * @param file 文件
+ * @param onUploadProgress 文件上传进度钩子函数
+ */
+export async function tcbUpLoadFile(
+  cloudPath: string,
+  file: File,
+  onUploadProgress: (progressEvent: ProgressEvent) => void
+) {
+  return await myApp.uploadFile({
+    cloudPath: cloudPath,
+    filePath: file as any,
+    onUploadProgress: onUploadProgress,
+  });
+}
+
+/**
+ * 下载文件
+ * @param fileId 文件唯一id
+ */
+export async function tcbDownloadFile(fileId: string) {
+  return await myApp.downloadFile({ fileID: fileId });
+}
+
+/**
+ * 获取文件临时url
+ * @param fileId 文件唯一id
+ */
+export async function tcbGetTempFileURL(fileId: string) {
+  let { fileList } = await myApp.getTempFileURL({ fileList: [fileId] });
+  if (fileList?.[0].code === "SUCCESS") {
+    return fileList[0].tempFileURL;
+  }
+  return "";
+}
+
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{

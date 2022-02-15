@@ -1,53 +1,47 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import moment from "moment";
 import RcResizeObserver from "rc-resize-observer";
 import ProCard, { StatisticCard } from "@ant-design/pro-card";
 import { DatePicker } from "antd";
 import { useRequest } from "@@/plugin-request/request";
-import { fakeChartData } from "@/pages/dashboard/analysis/service";
-import { Line, LineConfig } from "@ant-design/charts";
+import { getChartData } from "@/pages/dashboard/analysis/service";
+import { Column, ColumnConfig } from "@ant-design/charts";
+import { useModel } from "@@/plugin-model/useModel";
 
 const Analysis: FC = () => {
   const [responsive, setResponsive] = useState(false);
-  const [data, setData] = useState([]);
+  const { initialState } = useModel("@@initialState") as any;
 
-  useEffect(() => {
-    asyncFetch();
-  }, []);
-
-  const asyncFetch = () => {
-    fetch(
-      "https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json"
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log("fetch data failed", error);
-      });
-  };
-  const config: LineConfig = {
-    data,
-    autoFit: true,
-    padding: "auto",
-    xField: "Date",
-    yField: "scales",
-    xAxis: {
-      tickCount: 5,
-    },
-    slider: {
-      start: 0.1,
-      end: 0.5,
-    },
-  };
-
-  //TODO DayData fetch function
   const {
     data: oneDay,
     loading: loading,
     run: pickData,
-  } = useRequest<any>(fakeChartData, {
+  } = useRequest<any>(getChartData, {
     manual: true,
   });
+
+  const config: ColumnConfig = {
+    data: oneDay,
+    autoFit: true,
+    padding: "auto",
+    xField: "order",
+    yField: "time_continue",
+    meta: {
+      order: {
+        formatter: (value) => {
+          return oneDay[value].matter;
+        },
+      },
+      time_continue: {
+        alias: "duration",
+        type: "linear",
+      },
+    },
+    xAxis: {
+      tickCount: 5,
+    },
+    slider: {},
+  };
 
   return (
     <RcResizeObserver
@@ -61,7 +55,7 @@ const Analysis: FC = () => {
         extra={
           <DatePicker
             onChange={(date: moment.Moment | null) => {
-              pickData(date);
+              pickData({ date: date, uid: initialState.currentUser.uid });
             }}
           />
         }
@@ -69,7 +63,10 @@ const Analysis: FC = () => {
         headerBordered
         bordered
       >
-        <StatisticCard loading={loading} chart={<Line {...config} />} />
+        <StatisticCard
+          loading={loading}
+          chart={oneDay && <Column {...config} />}
+        />
       </ProCard>
     </RcResizeObserver>
   );

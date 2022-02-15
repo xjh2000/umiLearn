@@ -22,6 +22,12 @@ export const routes: MenuDataItem[] = [
         path: "/dashboard/analysis",
         component: "./dashboard/analysis",
       },
+      {
+        name: "上传",
+        icon: "upload",
+        path: "/dashboard/upFile",
+        component: "./dashboard/upFile",
+      },
     ],
   },
   {

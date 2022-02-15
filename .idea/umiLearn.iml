@@ -6,12 +6,11 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/src/.umi-production" />
-      <excludeFolder url="file://$MODULE_DIR$/src/.umi" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/.mfsu-production" />
+      <excludeFolder url="file://$MODULE_DIR$/src/.umi" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="@types/numeral" level="application" />
   </component>
 </module>
